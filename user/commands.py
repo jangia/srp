@@ -4,12 +4,14 @@ from .exceptions import InvalidUserException
 
 class BanUser:
 
-    def __init__(self, user_repository, username):
+    def __init__(self, user_repository):
         self.user_repository = user_repository
-        self.username = username #should pass this into execute instead, otherwise BanUser is a one-time use obj
 
-    def execute(self):
-        user = self.user_repository.get_by_username(self.username)
+    def execute(self, username):
+        user = self.user_repository.get_by_username(username)
+        if user is None: #dupe, should be extracted to a baseclass
+            raise InvalidUserException(f"User {username} doesn't exist")
+
         user.banned_until = datetime.date.today() + datetime.timedelta(days=7)
 
 class ChargeUser:
