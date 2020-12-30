@@ -20,6 +20,17 @@ def test_user():
     assert user.banned_until == banned_until
     assert user.balance == balance
 
+def testbanuser_whenuserdoesntexist_throws(existing_user, repository_with_existing_user):
+    #arrange
+    cmd = BanUser(
+        user_repository=repository_with_existing_user
+    )
+
+    notuser = "notjohndoe"
+    #act
+    with pytest.raises(InvalidUserException):
+        cmd.execute(username=notuser)
+
 def test_ban_user(existing_user, repository_with_existing_user):
     """
     GIVEN username of user existing in repository and user repository
@@ -27,9 +38,9 @@ def test_ban_user(existing_user, repository_with_existing_user):
     THEN existing user is banned for 7 days
     """
     ban_user = BanUser(
-        user_repository=repository_with_existing_user, username=existing_user.username
+        user_repository=repository_with_existing_user
     )
-    ban_user.execute()
+    ban_user.execute("johndoe")
 
     user = repository_with_existing_user.get_by_username(existing_user.username)
     banned_until = (datetime.date.today() + datetime.timedelta(days=7))
