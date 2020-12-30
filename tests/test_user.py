@@ -1,6 +1,6 @@
 import datetime
 
-from user import User, BanUser
+from user import User, BanUser, ChargeUser
 
 
 def test_user():
@@ -35,16 +35,16 @@ def test_ban_user(existing_user, repository_with_existing_user):
 
     assert user.banned_until == banned_until
 
-def test_charge_user(existing_user, repository_with_existing_user):
+def testchargeuser_whenchargeuser_updates_and_persists_balance(existing_user, repository_with_existing_user):
     #arrange
     cmd = ChargeUser(
-        user_repository=repository_with_existing_user, username=existing_user.username
+        user_repository=repository_with_existing_user
     )
     amount_to_charge = 20.20 
     expected_balance = amount_to_charge
 
     #act
-    cmd.execute()
+    cmd.execute(username=existing_user.username, amount=amount_to_charge)
     user = repository_with_existing_user.get_by_username(existing_user.username)
     
     #assert
