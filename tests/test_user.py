@@ -19,7 +19,6 @@ def test_user():
     assert user.banned_until == banned_until
     assert user.balance == balance
 
-
 def test_ban_user(existing_user, repository_with_existing_user):
     """
     GIVEN username of user existing in repository and user repository
@@ -35,3 +34,18 @@ def test_ban_user(existing_user, repository_with_existing_user):
     banned_until = (datetime.date.today() + datetime.timedelta(days=7))
 
     assert user.banned_until == banned_until
+
+def test_charge_user(existing_user, repository_with_existing_user):
+    #arrange
+    cmd = ChargeUser(
+        user_repository=repository_with_existing_user, username=existing_user.username
+    )
+    amount_to_charge = 20.20 
+    expected_balance = amount_to_charge
+
+    #act
+    cmd.execute()
+    user = repository_with_existing_user.get_by_username(existing_user.username)
+    
+    #assert
+    assert user.balance == expected_balance
