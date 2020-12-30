@@ -30,7 +30,7 @@ class InMemoryUserRepository:
         self.users.append(user)
 
     def get_by_username(self, username):
-        return next(user for user in self.users if user.username == username)
+        return next((user for user in self.users if user.username == username), None) #return None instead of StopIteration
 
 
 @pytest.fixture

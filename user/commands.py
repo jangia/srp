@@ -1,4 +1,5 @@
 import datetime
+from .exceptions import InvalidUserException
 
 
 class BanUser:
@@ -14,7 +15,11 @@ class BanUser:
 class ChargeUser:
 
     def __init__(self, user_repository):
-        pass
+        self.user_repository = user_repository
 
     def execute(self, username, amount):
+        user = self.user_repository.get_by_username(username)
+        if user is None:
+            raise InvalidUserException(f"User {username} doesn't exist")
+
         pass
