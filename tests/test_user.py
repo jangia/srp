@@ -1,4 +1,5 @@
 import datetime
+import pytest
 
 from user import User, BanUser, ChargeUser
 
@@ -35,7 +36,18 @@ def test_ban_user(existing_user, repository_with_existing_user):
 
     assert user.banned_until == banned_until
 
-def testchargeuser_whenchargeuser_updates_and_persists_balance(existing_user, repository_with_existing_user):
+def testchargeuser_whenuserdoesntexist_throws(existing_user, repository_with_existing_user):
+    #arrange
+    cmd = ChargeUser(
+        user_repository=repository_with_existing_user
+    )
+    username = "not" + existing_user.username
+
+    #act
+    with pytest.raises(Exception):
+        cmd.execute(username=username, amount=1)
+
+def testchargeuser_whenuserexists_updates_and_persists_balance(existing_user, repository_with_existing_user):
     #arrange
     cmd = ChargeUser(
         user_repository=repository_with_existing_user
