@@ -41,3 +41,8 @@ To run tests:
 ```sh
 (venv)$ pytest tests
 ```
+
+To run tests - if you're getting "pytest" not found:
+```sh
+(venv)$ python -m pytest
+```
