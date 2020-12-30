@@ -30,3 +30,14 @@ class User:
 
 ## Goal
 We're trying to find the best solution that complies with SRP.
+
+## Setup
+To install requirements:
+```sh
+(venv)$ pip install -r requirements.txt
+```
+
+To run tests:
+```sh
+(venv)$ pytest tests
+```
