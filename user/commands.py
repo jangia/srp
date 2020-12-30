@@ -22,4 +22,5 @@ class ChargeUser:
         if user is None:
             raise InvalidUserException(f"User {username} doesn't exist")
 
-        pass
+        user.balance = user.balance + amount
+        self.user_repository.update(user)
