@@ -9,8 +9,9 @@ from user import User
 def existing_user():
     username = 'johndoe'
     banned_until = datetime.datetime(1899, 1, 1)
+    balance = 0.00
 
-    user = User(username=username, banned_until=banned_until)
+    user = User(username=username, banned_until=banned_until, balance=balance)
 
     return user
 
