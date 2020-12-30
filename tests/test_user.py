@@ -11,11 +11,13 @@ def test_user():
     """
     username = 'johndoe'
     banned_until = datetime.datetime(1899, 1, 1)
+    balance = 0.00
 
-    user = User(username=username, banned_until=banned_until)
+    user = User(username=username, banned_until=banned_until, balance=balance)
 
     assert user.username == username
     assert user.banned_until == banned_until
+    assert user.balance == balance
 
 
 def test_ban_user(existing_user, repository_with_existing_user):
