@@ -13,6 +13,7 @@ class BanUser:
             raise InvalidUserException(f"User {username} doesn't exist")
 
         user.banned_until = datetime.date.today() + datetime.timedelta(days=7)
+        self.user_repository.update(user)
 
 class ChargeUser:
 
